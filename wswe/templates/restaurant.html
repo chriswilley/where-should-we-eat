@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>WSWE.com -- Restaurant Menu</title>
+        <!-- Bootstrap core CSS -->
+        <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="{{ url_for('static', filename='starter-template.css') }}" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+        <link href="{{ url_for('static', filename='custom.css') }}" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ url_for('listRestaurants') }}" style="display: block;">WSWE.com</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <form class="navbar-form navbar-right" role="form">
+                        <button type="submit" class="btn btn-success">Sign in</button>
+                    </form>
+                </div>
+                <!--/.navbar-collapse -->
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="row">
+            <div class="container">
+                <div class="flash">
+                {% for message in messages %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <strong>{{ message }}</strong>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+            </div>
+            {% endif %}
+        {% endwith %}
+        </div>
+
+        <div class="row">
+            <div class="container">
+                <h1 style="display: block;" class="text-center">{{ restaurant.name }}</h1>
+                <h4 style="display: block;" class="text-center">{{ restaurant.description }}</h4>
+                <span class="pull-right" style="display: inline;"><a href="{{ url_for('updateRestaurant', restaurant_id=restaurant.id) }}" data-toggle="tooltip" title="Edit Restaurant Info" data-placement="left" data-trigger="hover"><span class="fa-stack fa-lg"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x fa-inverse"></i></span></a><a href="{{ url_for('restaurantMenuJSON', restaurant_id=restaurant.id) }}" data-toggle="tooltip" title="View menu as JSON" data-placement="top" data-trigger="hover"><span class="fa-stack fa-lg" style="display: inline-block;"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-code fa-stack-1x fa-inverse"></i></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-success" href="{{ url_for('newMenuItem', restaurant_id=restaurant.id) }}" data-toggle="tooltip" title="Add Menu Item" data-placement="bottom" data-trigger="hover"><i class="fa fa-plus fa-lg fa-inverse"></i></a><br></span>
+            </div>
+        </div>
+        {% if items.count() == 0 %}
+        <div class="row">
+            <div class="container"><h3>No menu items yet. <a href="{{ url_for('newMenuItem', restaurant_id=restaurant.id) }}">Add one now!</a></h3></div>
+        </div>
+        {% endif %}
+    {% set this_course = '' %}
+    {% for i in items %}
+        {% if i.course != this_course %}
+            {% set row_index = 1 %}
+            {% if loop.index != 1 %}
+            </div>
+        </div>
+            {% endif %}
+        <div class="row">
+            <div class="container">
+                <p style="display: block;">{{ i.course }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container center-block">
+        {% endif %}
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h4 style="display: block;">{{ i.name }}</h4>
+                            <p style="display: block;">{{ i.description }}</p>
+                            <h6 class="text-right" style="display: block;"><i>{{ i.price }}</i></h6>
+                            <a href="{{ url_for('menuItemJSON', restaurant_id=restaurant.id, menu_id=i.id) }}" class="btn tiny-btn btn-primary pull-right" role="button" style="display: inline-block;" data-toggle="tooltip" title="View as JSON" data-placement="top" data-trigger="hover"><i class="fa fa-code"></i><br></a>
+                            <p style="display: block;"><a href="{{ url_for('editMenuItem', restaurant_id=restaurant.id, menu_id=i.id) }}" class="btn btn-info tiny-btn" role="button" style="display: inline-block;">Edit</a> <a href="{{ url_for('deleteMenuItem', restaurant_id=restaurant.id, menu_id=i.id) }}" class="btn btn-default btn-danger tiny-btn" role="button" style="display: inline-block;">Delete</a></p>
+                        </div>
+                    </div>
+                </div>
+            {% if row_index % 3 == 0 %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="container center-block">
+            {% endif %}
+        {% set this_course = i.course %}
+        {% set row_index = row_index + 1 %}
+    {% endfor %}
+            </div>
+        </div>
+        <div class="container">
+            <hr>
+            <footer>
+                <p style="display: block;">&copy; Chris Willey 2015</p>
+            </footer>
+        </div>
+        <!-- /.container -->
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="{{ url_for('static', filename='assets/js/ie10-viewport-bug-workaround.js') }}"></script>
+        <script>
+            $('[data-toggle="tooltip"]').tooltip();
+        </script>
+    </body>
+</html>
