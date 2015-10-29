@@ -44,7 +44,7 @@ python database_setup.py
 The file lotsofmenusandusers.py contains test data. To load it into the database, run:
 
 ```
-python lotsofmenus.py
+python lotsofmenusandusers.py
 ```
 
 
