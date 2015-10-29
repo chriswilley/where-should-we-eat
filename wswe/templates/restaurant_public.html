@@ -60,12 +60,12 @@
             <div class="container">
                 <h1 style="display: block;" class="text-center">{{ restaurant.name }}</h1>
                 <h4 style="display: block;" class="text-center">{{ restaurant.description }}</h4>
-                <span class="pull-right" style="display: inline;">{% if user == restaurant.user_id %}<a href="{{ url_for('updateRestaurant', restaurant_id=restaurant.id) }}" data-toggle="tooltip" title="Edit Restaurant Info" data-placement="left" data-trigger="hover"><span class="fa-stack fa-lg"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x fa-inverse"></i></span></a>{% endif %}<a href="{{ url_for('restaurantMenuJSON', restaurant_id=restaurant.id) }}" data-toggle="tooltip" title="View menu as JSON" data-placement="top" data-trigger="hover"><span class="fa-stack fa-lg" style="display: inline-block;"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-code fa-stack-1x fa-inverse"></i></span></a>{% if user == restaurant.user_id %}&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-success" href="{{ url_for('newMenuItem', restaurant_id=restaurant.id) }}" data-toggle="tooltip" title="Add Menu Item" data-placement="bottom" data-trigger="hover"><i class="fa fa-plus fa-lg fa-inverse"></i></a>{% endif %}<br></span>
+                <span class="pull-right" style="display: inline;"><a href="{{ url_for('restaurantMenuJSON', restaurant_id=restaurant.id) }}" data-toggle="tooltip" title="View menu as JSON" data-placement="top" data-trigger="hover"><span class="fa-stack fa-lg" style="display: inline-block;"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-code fa-stack-1x fa-inverse"></i></span></a><br></span>
             </div>
         </div>
         {% if items.count() == 0 %}
         <div class="row">
-            <div class="container"><h3>No menu items yet. <a href="{{ url_for('newMenuItem', restaurant_id=restaurant.id) }}">Add one now!</a></h3></div>
+            <div class="container"><h3>No menu items yet.</h3></div>
         </div>
         {% endif %}
     {% set this_course = '' %}
@@ -90,12 +90,7 @@
                             <h4 style="display: block;">{{ i.name }}</h4>
                             <p style="display: block;">{{ i.description }}</p>
                             <h6 class="text-right" style="display: block;"><i>{{ i.price }}</i></h6>
-                            {% if user == i.user_id %}
-                            <a href="{{ url_for('menuItemJSON', restaurant_id=restaurant.id, menu_id=i.id) }}" class="btn tiny-btn btn-primary pull-right" role="button" style="display: inline-block;" data-toggle="tooltip" title="View as JSON" data-placement="top" data-trigger="hover"><i class="fa fa-code"></i><br></a>
-                            <p style="display: block;"><a href="{{ url_for('editMenuItem', restaurant_id=restaurant.id, menu_id=i.id) }}" class="btn btn-info tiny-btn" role="button" style="display: inline-block;">Edit</a> <a href="{{ url_for('deleteMenuItem', restaurant_id=restaurant.id, menu_id=i.id) }}" class="btn btn-default btn-danger tiny-btn" role="button" style="display: inline-block;">Delete</a></p>
-                            {% else %}
                             <a href="{{ url_for('menuItemJSON', restaurant_id=restaurant.id, menu_id=i.id) }}" class="btn tiny-btn btn-primary" role="button" style="display: inline-block;" data-toggle="tooltip" title="View as JSON" data-placement="top" data-trigger="hover"><i class="fa fa-code"></i><br></a>
-                            {% endif %}
                         </div>
                     </div>
                 </div>

@@ -24,10 +24,10 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 Note the version number (2.7.10 in this case). If it starts with "3.", you should download version 2.7. If you have questions about any of this, check Python's [excellent online documentation](https://www.python.org/doc/).
 
-The project uses the Flask framework. To install it, run:
+There are a number of Python module dependencies for this project. To install them all, run the following:
 
 ```
-pip install flask
+pip install -r requirements.txt
 ```
 
 Finally, you'll need [git](http://git-scm.com/download) so that you can clone this project.
@@ -41,7 +41,7 @@ The project user Sqlite as a database. To set it up, just run:
 python database_setup.py
 ```
 
-The file lotsofmenus.py contains test data. To load it into the database, run:
+The file lotsofmenusandusers.py contains test data. To load it into the database, run:
 
 ```
 python lotsofmenus.py

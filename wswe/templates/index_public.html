@@ -35,11 +35,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right" role="form">
-                    {% if 'username' not in session %}
                         <a href="{{ url_for('showLogin') }}"><button type="button" class="btn btn-success">Sign in</button></a>
-                    {% else %}
-                        <a href="{{ url_for('disconnect') }}"><button type="button" class="btn btn-danger">Log Out</button></a>
-                    {% endif %}
                     </form>
                 </div>
                 <!--/.navbar-collapse -->
@@ -75,14 +71,10 @@
 
         <div class="container">
             <div class="row">
-                <span class="pull-right" style="display: inline;"><a class="btn btn-success" href="{{ url_for('addRestaurant') }}" data-toggle="tooltip" title="Add Restaurant" data-placement="left" data-trigger="hover"><i class="fa fa-plus fa-lg fa-inverse"></i></a><br></span>
             {% for r in restaurants %}
                 <div class="col-md-3 col-md-offset-2 col-sm-6">
                     <h3 style="display: block;">{{ r.name }}</h3>
                     <p>{{ r.description }}</p>
-                    {% if user == r.user_id %}
-                    <a href="{{ url_for('deleteRestaurant', restaurant_id=r.id) }}" class="btn tiny-btn btn-danger pull-right" role="button" style="display: inline-block;" data-toggle="tooltip" title="Delete Restaurant" data-placement="left" data-trigger="hover"><i class="fa fa-trash" style="padding-top: 3px; padding-bottom: 3px"></i></a>
-                    {% endif %}
                     <p><a class="btn btn-warning tiny-btn" href="{{ url_for('restaurantMenu', restaurant_id=r.id) }}" role="button" style="display: inline-block;">View menu »</a></p>
                 </div>
                 {% if (loop.index % 2 == 0) %}

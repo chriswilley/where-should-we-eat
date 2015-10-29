@@ -25,7 +25,11 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right" role="form">
-                        <button type="submit" class="btn btn-success">Sign in</button>
+                    {% if 'username' not in session %}
+                        <a href="{{ url_for('showLogin') }}"><button type="button" class="btn btn-success">Sign in</button></a>
+                    {% else %}
+                        <a href="{{ url_for('disconnect') }}"><button type="button" class="btn btn-danger">Log Out</button></a>
+                    {% endif %}
                     </form>
                 </div>
                 <!--/.navbar-collapse -->

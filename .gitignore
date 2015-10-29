@@ -2,3 +2,5 @@
 archive/
 *.pyc
 restaurantmenu.db
+restaurantmenuwithusers.db
+*.json
